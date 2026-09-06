@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace ROMHUB_2026
+namespace ROMHub
 {
     /// <summary>
     /// Interaction logic for App.xaml

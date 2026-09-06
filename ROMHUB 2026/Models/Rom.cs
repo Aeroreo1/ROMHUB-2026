@@ -17,5 +17,8 @@ namespace ROMHub.Models
         public string CoverImagePath { get; set; } //Path to the cover image
 
         public bool IsFavourite { get; set; } //If the ROM is set as favourite
+
+        // Optional: remember the preferred emulator Id to use when launching this ROM
+        public int? PreferredEmulatorId { get; set; }
     }
 }

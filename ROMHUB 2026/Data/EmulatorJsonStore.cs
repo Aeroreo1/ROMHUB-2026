@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using ROMHub.Models;
 
-namespace ROMHUB_2026.Data
+namespace ROMHub.Data
 {
     public static class EmulatorJsonStore
     {

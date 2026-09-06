@@ -20,9 +20,18 @@
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,10">
             <TextBlock Text="Platform:" Width="80" VerticalAlignment="Center" />
             <ComboBox x:Name="PlatformComboBox" Width="360" SelectedIndex="0">
-                <ComboBoxItem>GameBoy Advanced (GBA)</ComboBoxItem>
-                <ComboBoxItem>DS</ComboBoxItem>
-                <ComboBoxItem>Wii</ComboBoxItem>
+                <ComboBoxItem>Retro Classics [retro; classic; retro classics]</ComboBoxItem>
+                <ComboBoxItem>Game Boy Advance (GBA) [gba; gameboy advance; gameboy]</ComboBoxItem>
+                <ComboBoxItem>DS [ds; nintendo ds]</ComboBoxItem>
+                <ComboBoxItem>Nintendo 3DS [3ds; nintendo 3ds]</ComboBoxItem>
+                <ComboBoxItem>Nintendo GameCube &amp; Wii [gamecube; gc; wii]</ComboBoxItem>
+                <ComboBoxItem>Nintendo WiiU [wiiu; nintendo wiiu]</ComboBoxItem>
+                <ComboBoxItem>Nintendo Switch [switch; ns; nintendo switch]</ComboBoxItem>
+                <ComboBoxItem>PlayStation 1 [ps1; playstation1; playstation]</ComboBoxItem>
+                <ComboBoxItem>PlayStation 2 [ps2; playstation2]</ComboBoxItem>
+                <ComboBoxItem>PlayStation 3 [ps3; playstation3]</ComboBoxItem>
+                <ComboBoxItem>PlayStation 4 [ps4; playstation4]</ComboBoxItem>
+                <ComboBoxItem>Xbox 360 [xbox360; x360]</ComboBoxItem>
             </ComboBox>
         </StackPanel>
 

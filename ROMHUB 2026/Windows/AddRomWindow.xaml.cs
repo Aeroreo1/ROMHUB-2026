@@ -13,6 +13,28 @@ namespace ROMHub.Windows
         public AddRomWindow()
         {
             InitializeComponent();
+            // Ensure platform list includes aliases and the requested order at runtime
+            try
+            {
+                PlatformComboBox.Items.Clear();
+                PlatformComboBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = "Game Boy Advance (GBA) [gba; gameboy advance; gameboy]" });
+                PlatformComboBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = "DS [ds; nintendo ds]" });
+                PlatformComboBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = "PlayStation 1 [ps1; playstation1; playstation]" });
+                PlatformComboBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = "PlayStation 2 [ps2; playstation2]" });
+                PlatformComboBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = "Nintendo GameCube & Wii [gamecube; gc; wii]" });
+                PlatformComboBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = "Nintendo Switch [switch; ns; nintendo switch]" });
+                PlatformComboBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = "Nintendo 3DS [3ds; nintendo 3ds]" });
+                PlatformComboBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = "Nintendo WiiU [wiiu; nintendo wiiu]" });
+                PlatformComboBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = "Xbox 360 [xbox360; x360]" });
+                PlatformComboBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = "PlayStation 3 [ps3; playstation3]" });
+                PlatformComboBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = "PlayStation 4 [ps4; playstation4]" });
+                PlatformComboBox.Items.Add(new System.Windows.Controls.ComboBoxItem { Content = "Retro Classics [retro; classic; retro classics]" });
+                PlatformComboBox.SelectedIndex = 0;
+            }
+            catch
+            {
+                // ignore if PlatformComboBox isn't available at design time
+            }
         }
 
         private void Browse_Click(object sender, RoutedEventArgs e)

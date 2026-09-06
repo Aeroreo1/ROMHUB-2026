@@ -118,6 +118,45 @@ namespace ROMHub.Pages
             cm.Items.Add(new System.Windows.Controls.Separator());
             cm.Items.Add(delete);
 
+            // Build 'Open With' submenu containing available emulators
+            try
+            {
+                var openWith = new System.Windows.Controls.MenuItem { Header = "Open With" };
+                var emus = ROMHub.Data.EmulatorJsonStore.Load().OrderBy(x => x.Name).ToList();
+                foreach (var emu in emus)
+                {
+                    var capturedEmu = emu; // avoid closure over loop variable
+                    var mi = new System.Windows.Controls.MenuItem { Header = capturedEmu.Name, CommandParameter = capturedEmu };
+                    mi.Click += (s, args) =>
+                    {
+                        // Remember user's choice for this ROM and persist
+                        try
+                        {
+                            rom.PreferredEmulatorId = capturedEmu.Id;
+                            ROMHub.Data.RomJsonStore.Update(rom);
+                        }
+                        catch
+                        {
+                            // ignore persistence errors
+                        }
+
+                        // Launch emulator with rom path as argument
+                        LaunchEmulatorWithRom(capturedEmu, rom.FilePath);
+                    };
+                    openWith.Items.Add(mi);
+                }
+
+                if (openWith.Items.Count > 0)
+                {
+                    cm.Items.Add(new System.Windows.Controls.Separator());
+                    cm.Items.Add(openWith);
+                }
+            }
+            catch
+            {
+                // ignore if emulator list cannot be read
+            }
+
             // Attach to button and open
             btn.ContextMenu = cm;
             cm.PlacementTarget = btn;
@@ -180,6 +219,102 @@ namespace ROMHub.Pages
             rom.CoverImagePath = dest;
             ROMHub.Data.RomJsonStore.Update(rom);
             LoadRoms();
+        }
+
+        private void LaunchRomWithDefaultEmulator_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as System.Windows.Controls.Button;
+            if (btn == null) return;
+
+            var rom = btn.CommandParameter as Rom ?? btn.DataContext as Rom;
+            if (rom == null) return;
+
+            // Find first emulator whose Platform matches the rom.Platform (case-insensitive, contains)
+            try
+            {
+                var emus = ROMHub.Data.EmulatorJsonStore.Load();
+
+                // 1) If ROM has a preferred emulator saved, try that first
+                ROMHub.Models.Emulator emulator = null;
+                if (rom.PreferredEmulatorId.HasValue)
+                {
+                    emulator = emus.FirstOrDefault(x => x.Id == rom.PreferredEmulatorId.Value);
+                }
+
+                // 2) Otherwise fall back to platform matching
+                if (emulator == null)
+                {
+                    var plat = (rom.Platform ?? string.Empty).ToLowerInvariant();
+                    emulator = emus.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.Platform) && plat.Contains(x.Platform.ToLowerInvariant()));
+                    if (emulator == null)
+                    {
+                        // Try a looser match: emulator.Platform contains rom.Platform
+                        emulator = emus.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.Platform) && x.Platform.ToLowerInvariant().Contains(plat));
+                    }
+                }
+
+                if (emulator == null)
+                {
+                    MessageBox.Show($"No emulator registered for platform '{rom.Platform}'. Use 'Open With' to pick an emulator.", "No emulator", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                LaunchEmulatorWithRom(emulator, rom.FilePath);
+            }
+            catch
+            {
+                MessageBox.Show("Failed to locate or launch an emulator.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void LaunchEmulatorWithRom(ROMHub.Models.Emulator emulator, string romPath)
+        {
+            if (emulator == null)
+                return;
+
+            if (string.IsNullOrWhiteSpace(emulator.FilePath) || !System.IO.File.Exists(emulator.FilePath))
+            {
+                MessageBox.Show($"Emulator executable not found: {emulator.FilePath}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(romPath) || !System.IO.File.Exists(romPath))
+            {
+                MessageBox.Show($"ROM file not found: {romPath}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                // Replace {rom} placeholder in emulator.Arguments with quoted rom path
+                var args = emulator.Arguments ?? string.Empty;
+                if (args.Contains("{rom}"))
+                {
+                    args = args.Replace("{rom}", '"' + romPath + '"');
+                }
+                else
+                {
+                    // If no placeholder provided, append ROM path as last argument
+                    if (!string.IsNullOrWhiteSpace(args))
+                        args = args + " " + '"' + romPath + '"';
+                    else
+                        args = '"' + romPath + '"';
+                }
+
+                var psi = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = emulator.FilePath,
+                    Arguments = args,
+                    WorkingDirectory = System.IO.Path.GetDirectoryName(emulator.FilePath),
+                    UseShellExecute = true
+                };
+
+                System.Diagnostics.Process.Start(psi);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Failed to launch emulator: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
