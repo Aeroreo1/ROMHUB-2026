@@ -19,8 +19,14 @@ namespace ROMHub
         public MainWindow()
         {
             InitializeComponent();
-            // Navigate to the default home page on startup
-            MainFrame.Navigate(new Pages.HomePage());
+            // Ensure the SQLite database is created on first run
+            using (var db = new Data.RomHubContext())
+            {
+                db.Database.EnsureCreated();
+            }
+
+            // Navigate to the Library page on startup
+            MainFrame.Navigate(new Pages.LibraryPage());
         }
 
         private void Home_Click(object sender, RoutedEventArgs e)

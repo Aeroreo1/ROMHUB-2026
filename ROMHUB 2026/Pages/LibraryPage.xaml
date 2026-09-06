@@ -3,16 +3,40 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Library">
 
-    <Grid>
-        <StackPanel Margin="20">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="0,0,0,10">
             <TextBlock Text="Library"
                        FontSize="28"
                        FontWeight="Bold"
-                       Margin="0,0,0,20"/>
+                       VerticalAlignment="Center"
+                       DockPanel.Dock="Left" />
 
-            <TextBlock Text="Your ROM library will be shown here."
-                       FontSize="18"/>
-        </StackPanel>
+            <Button Content="Add ROM"
+                    Width="100"
+                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Right"
+                    Click="AddRom_Click" />
+        </DockPanel>
+
+        <ListView x:Name="RomsListView" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="8" BorderBrush="#EEE" BorderThickness="0,0,0,1">
+                        <StackPanel>
+                            <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Platform}" FontSize="12" Foreground="Gray" />
+                            <TextBlock Text="{Binding FilePath}" FontSize="12" Foreground="DarkGray" />
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
     </Grid>
 
 </Page>
