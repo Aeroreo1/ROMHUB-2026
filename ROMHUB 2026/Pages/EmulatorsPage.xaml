@@ -3,16 +3,99 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Emulators">
 
-    <Grid>
-        <StackPanel Margin="20">
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <DockPanel Grid.Row="0" Margin="0,0,0,15">
+
             <TextBlock Text="Emulators"
                        FontSize="28"
                        FontWeight="Bold"
-                       Margin="0,0,0,20"/>
+                       VerticalAlignment="Center"
+                       DockPanel.Dock="Left"/>
 
-            <TextBlock Text="Configure and manage emulators here."
-                       FontSize="18"/>
-        </StackPanel>
+            <Button Content="Add Emulator"
+                    Width="110"
+                    Height="35"
+                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Right"
+                    Click="AddEmulator_Click"/>
+
+        </DockPanel>
+
+        <!-- Emulator Cards -->
+        <ListView x:Name="EmulatorsListView"
+                  Grid.Row="1"
+                  BorderThickness="0"
+                  Background="Transparent">
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+
+                    <Border Width="220"
+                            Height="300"
+                            Margin="8"
+                            Padding="10"
+                            Background="White"
+                            BorderBrush="#DDDDDD"
+                            BorderThickness="1"
+                            CornerRadius="8">
+
+                        <StackPanel>
+
+                            <!-- Image Placeholder -->
+                            <Border Height="190"
+                                    Background="#EEEEEE"
+                                    CornerRadius="5">
+
+                                <TextBlock Text="No Image"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Foreground="Gray"
+                                           FontSize="16"/>
+
+                            </Border>
+
+                            <!-- Emulator Name -->
+                            <TextBlock Text="{Binding Name}"
+                                       FontSize="17"
+                                       FontWeight="Bold"
+                                       Margin="0,10,0,2"
+                                       TextTrimming="CharacterEllipsis"/>
+
+                            <!-- Platform -->
+                            <TextBlock Text="{Binding Platform}"
+                                       FontSize="13"
+                                       Foreground="Gray"/>
+
+                            <!-- Launch Button -->
+                            <Button Content="Launch"
+                                    Width="100"
+                                    Height="30"
+                                    Margin="0,10,0,0"
+                                    HorizontalAlignment="Center"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+
     </Grid>
 
 </Page>
+
