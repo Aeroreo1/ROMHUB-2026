@@ -1,0 +1,24 @@
+ROMHUB
+Copyright © 2026 Luke Martin
+All rights reserved.
+
+This software and its source code are the original work of the copyright holder, except where otherwise stated or where third-party components are used under their respective licenses.
+
+Permission is granted to view and evaluate the source code for personal, educational, or portfolio purposes.
+
+Without prior written permission from the copyright holder, no permission is granted to:
+
+- Copy or redistribute the source code or substantial portions of it;
+- Modify and redistribute the software or derivative versions;
+- Sell, sublicense, or commercially distribute the software;
+- Present the software or substantial portions of its source code as your own work.
+
+The copyright notice and this license must remain with copies of the source code that are permitted under the terms above.
+
+Third-party libraries, frameworks, and other components used by ROMHUB remain subject to their respective licenses. Nothing in this license overrides those third-party licenses.
+
+ROM files, BIOS files, emulator software, trademarks, and other third-party content are not included with ROMHUB and remain the property of their respective owners.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW. THE COPYRIGHT HOLDER SHALL NOT BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
+
+For permission requests or licensing enquiries, contact the copyright holder.
