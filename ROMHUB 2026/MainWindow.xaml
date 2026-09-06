@@ -1,24 +1,74 @@
-﻿<Window x:Class="ROMHUB_2026.MainWindow"
+﻿<Window x:Class="ROMHub.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ROMHUB_2026"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    
-   
+        Title="ROMHub"
+        Height="600"
+        Width="1000"
+        WindowStartupLocation="CenterScreen">
+
     <Grid>
 
-        <TextBlock Text="Home"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="24"/>
+        <!-- Left Side Menu -->
+        <Grid Width="200"
+              HorizontalAlignment="Left"
+              Background="#222222">
 
-        <TextBlock Text="Hello, World!"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="24"/>
+            <StackPanel Margin="20">
+
+                <!-- Application Title -->
+                <TextBlock Text="ROMHub"
+                           FontSize="28"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           Margin="0,0,0,40"/>
+
+                <!-- Menu Buttons -->
+
+                <Button Content="Home"
+                        Height="45"
+                        Margin="0,5"
+                        Click="Home_Click"/>
+
+                <Button Content="Library"
+                        Height="45"
+                        Margin="0,5"
+                        Click="Library_Click"/>
+
+                <Button Content="Favourites"
+                        Height="45"
+                        Margin="0,5"
+                        Click="Favourites_Click"/>
+
+                <Button Content="Emulators"
+                        Height="45"
+                        Margin="0,5"
+                        Click="Emulators_Click"/>
+
+                <Button Content="Settings"
+                        Height="45"
+                        Margin="0,5"
+                        Click="Settings_Click"/>
+
+                <Button Content="Exit"
+                        Height="45"
+                        Margin="0.5"
+                        Click="Exit_Click"/>
+
+            </StackPanel>
+
+        </Grid>
+
+
+        <!-- Main Content Area -->
+
+        <Grid Margin="220,20,20,20">
+
+            <!-- Frame for navigation -->
+            <Frame x:Name="MainFrame"
+                   NavigationUIVisibility="Hidden"/>
+
+        </Grid>
 
     </Grid>
+
 </Window>

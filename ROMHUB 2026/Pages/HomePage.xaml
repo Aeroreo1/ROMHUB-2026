@@ -1,0 +1,18 @@
+<Page x:Class="ROMHub.Pages.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Home">
+
+    <Grid>
+        <StackPanel Margin="20">
+            <TextBlock Text="Home"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Margin="0,0,0,20"/>
+
+            <TextBlock Text="Welcome to ROMHub!"
+                       FontSize="18"/>
+        </StackPanel>
+    </Grid>
+
+</Page>

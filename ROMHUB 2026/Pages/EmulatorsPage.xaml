@@ -1,0 +1,18 @@
+<Page x:Class="ROMHub.Pages.EmulatorsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Emulators">
+
+    <Grid>
+        <StackPanel Margin="20">
+            <TextBlock Text="Emulators"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Margin="0,0,0,20"/>
+
+            <TextBlock Text="Configure and manage emulators here."
+                       FontSize="18"/>
+        </StackPanel>
+    </Grid>
+
+</Page>
