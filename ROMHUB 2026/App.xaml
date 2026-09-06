@@ -2,8 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ROMHUB_2026"
+             xmlns:conv="clr-namespace:ROMHub.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <conv:ImagePathToBitmapConverter x:Key="ImagePathToBitmapConverter" />
     </Application.Resources>
 </Application>

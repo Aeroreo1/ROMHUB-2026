@@ -25,8 +25,8 @@ namespace ROMHub
                 db.Database.EnsureCreated();
             }
 
-            // Navigate to the Library page on startup
-            MainFrame.Navigate(new Pages.LibraryPage());
+            // Navigate to the Home page on startup
+            MainFrame.Navigate(new Pages.HomePage());
         }
 
         private void Home_Click(object sender, RoutedEventArgs e)

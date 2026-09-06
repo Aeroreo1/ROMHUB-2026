@@ -55,5 +55,46 @@ namespace ROMHub.Data
                 Save(roms);
             }
         }
+
+        public static void Update(Rom rom)
+        {
+            lock (FileLock)
+            {
+                var roms = Load();
+                var idx = roms.FindIndex(r => r.Id == rom.Id);
+                if (idx >= 0)
+                {
+                    roms[idx] = rom;
+                    Save(roms);
+                }
+                else
+                {
+                    // If not found, add as new
+                    rom.Id = roms.Any() ? roms.Max(r => r.Id) + 1 : 1;
+                    roms.Add(rom);
+                    Save(roms);
+                }
+            }
+        }
+
+        public static void Delete(int id)
+        {
+            lock (FileLock)
+            {
+                var roms = Load();
+                var idx = roms.FindIndex(r => r.Id == id);
+                if (idx >= 0)
+                {
+                    roms.RemoveAt(idx);
+                    Save(roms);
+                }
+            }
+        }
+
+        public static void Delete(Rom rom)
+        {
+            if (rom == null) return;
+            Delete(rom.Id);
+        }
     }
 }
