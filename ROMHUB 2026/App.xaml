@@ -6,5 +6,6 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <conv:ImagePathToBitmapConverter x:Key="ImagePathToBitmapConverter" />
+        <conv:MultiImagePathToBitmapConverter x:Key="MultiImagePathToBitmapConverter" />
     </Application.Resources>
 </Application>

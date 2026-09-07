@@ -8,6 +8,9 @@
 
         public string Platform { get; set; } = string.Empty;
 
+        // Optional canonical tag to match ROM entries (e.g. "nes", "gba", "ps1")
+        public string PlatformTag { get; set; } = string.Empty;
+
         public string FilePath { get; set; } = string.Empty;
 
         public string ImagePath { get; set; } = string.Empty;

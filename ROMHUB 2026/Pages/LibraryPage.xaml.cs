@@ -244,8 +244,26 @@ namespace ROMHub.Pages
                 // 2) Otherwise fall back to platform matching
                 if (emulator == null)
                 {
+                    var romTag = (rom.PlatformTag ?? string.Empty).ToLowerInvariant();
                     var plat = (rom.Platform ?? string.Empty).ToLowerInvariant();
-                    emulator = emus.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.Platform) && plat.Contains(x.Platform.ToLowerInvariant()));
+
+                    // Prefer matching by canonical tag when present on both ROM and emulator
+                    if (!string.IsNullOrWhiteSpace(romTag))
+                    {
+                        emulator = emus.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.PlatformTag) && x.PlatformTag.ToLowerInvariant() == romTag);
+                    }
+
+                    // Fallbacks: match emulator tag contained in rom platform, or platform strings as before
+                    if (emulator == null && !string.IsNullOrWhiteSpace(romTag))
+                    {
+                        emulator = emus.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.PlatformTag) && plat.Contains(x.PlatformTag.ToLowerInvariant()));
+                    }
+
+                    if (emulator == null)
+                    {
+                        emulator = emus.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.Platform) && plat.Contains(x.Platform.ToLowerInvariant()));
+                    }
+
                     if (emulator == null)
                     {
                         // Try a looser match: emulator.Platform contains rom.Platform

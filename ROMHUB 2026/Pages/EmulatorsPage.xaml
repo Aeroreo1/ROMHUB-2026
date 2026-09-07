@@ -59,11 +59,16 @@
                                     Background="#EEEEEE"
                                     CornerRadius="5">
 
-                                <TextBlock Text="No Image"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Foreground="Gray"
-                                           FontSize="16"/>
+                                <Image Stretch="UniformToFill"
+                                       Width="200"
+                                       Height="190">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource MultiImagePathToBitmapConverter}">
+                                            <Binding Path="ImagePath" />
+                                            <Binding Path="PlatformTag" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
 
                             </Border>
 
@@ -78,6 +83,19 @@
                             <TextBlock Text="{Binding Platform}"
                                        FontSize="13"
                                        Foreground="Gray"/>
+
+                            <!-- 3-dot overflow button -->
+                            <Button x:Name="OverflowButton"
+                                    Content="⋮"
+                                    Width="28"
+                                    Height="28"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Margin="0,4,4,0"
+                                    Opacity="0.85"
+                                    ToolTip="Options"
+                                    Click="EmulatorOverflowButton_Click"
+                                    CommandParameter="{Binding}" />
 
                             <!-- Launch Button -->
                             <Button Content="Launch"

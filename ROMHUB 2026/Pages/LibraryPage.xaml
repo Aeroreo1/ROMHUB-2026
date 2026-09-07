@@ -79,10 +79,16 @@
                                 <Border Height="170"
                                         Background="#EEEEEE"
                                         CornerRadius="5">
-                                    <Image Source="{Binding CoverImagePath, Converter={StaticResource ImagePathToBitmapConverter}}"
-                                           Stretch="UniformToFill"
+                                    <Image Stretch="UniformToFill"
                                            Width="200"
-                                           Height="170"/>
+                                           Height="170">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource MultiImagePathToBitmapConverter}">
+                                                <Binding Path="CoverImagePath" />
+                                                <Binding Path="PlatformTag" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
                                 </Border>
 
                                 <!-- 3-dot overflow button -->

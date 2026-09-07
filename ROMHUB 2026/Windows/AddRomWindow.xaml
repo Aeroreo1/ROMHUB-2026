@@ -17,22 +17,31 @@
             <TextBox x:Name="TitleTextBox" Width="360" />
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,10">
-            <TextBlock Text="Platform:" Width="80" VerticalAlignment="Center" />
-            <ComboBox x:Name="PlatformComboBox" Width="360" SelectedIndex="0">
-                <ComboBoxItem>Retro Classics [retro; classic; retro classics]</ComboBoxItem>
-                <ComboBoxItem>Game Boy Advance (GBA) [gba; gameboy advance; gameboy]</ComboBoxItem>
-                <ComboBoxItem>DS [ds; nintendo ds]</ComboBoxItem>
-                <ComboBoxItem>Nintendo 3DS [3ds; nintendo 3ds]</ComboBoxItem>
-                <ComboBoxItem>Nintendo GameCube &amp; Wii [gamecube; gc; wii]</ComboBoxItem>
-                <ComboBoxItem>Nintendo WiiU [wiiu; nintendo wiiu]</ComboBoxItem>
-                <ComboBoxItem>Nintendo Switch [switch; ns; nintendo switch]</ComboBoxItem>
-                <ComboBoxItem>PlayStation 1 [ps1; playstation1; playstation]</ComboBoxItem>
-                <ComboBoxItem>PlayStation 2 [ps2; playstation2]</ComboBoxItem>
-                <ComboBoxItem>PlayStation 3 [ps3; playstation3]</ComboBoxItem>
-                <ComboBoxItem>PlayStation 4 [ps4; playstation4]</ComboBoxItem>
-                <ComboBoxItem>Xbox 360 [xbox360; x360]</ComboBoxItem>
-            </ComboBox>
+        <!-- Platform area: ComboBox + optional custom name textbox -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Platform:" Width="80" VerticalAlignment="Center" />
+                <ComboBox x:Name="PlatformComboBox" Width="360" SelectedIndex="0" SelectionChanged="PlatformComboBox_SelectionChanged">
+                    <ComboBoxItem>Retro Classics [retro; classic; retro classics]</ComboBoxItem>
+                    <ComboBoxItem>Game Boy Advance (GBA) [gba; gameboy advance; gameboy]</ComboBoxItem>
+                    <ComboBoxItem>DS [ds; nintendo ds]</ComboBoxItem>
+                    <ComboBoxItem>Nintendo 3DS [3ds; nintendo 3ds]</ComboBoxItem>
+                    <ComboBoxItem>Nintendo GameCube &amp; Wii [gamecube; gc; wii]</ComboBoxItem>
+                    <ComboBoxItem>Nintendo WiiU [wiiu; nintendo wiiu]</ComboBoxItem>
+                    <ComboBoxItem>Nintendo Switch [switch; ns; nintendo switch]</ComboBoxItem>
+                    <ComboBoxItem>PlayStation 1 [ps1; playstation1; playstation]</ComboBoxItem>
+                    <ComboBoxItem>PlayStation 2 [ps2; playstation2]</ComboBoxItem>
+                    <ComboBoxItem>PlayStation 3 [ps3; playstation3]</ComboBoxItem>
+                    <ComboBoxItem>PlayStation 4 [ps4; playstation4]</ComboBoxItem>
+                    <ComboBoxItem>Xbox 360 [xbox360; x360]</ComboBoxItem>
+                    <ComboBoxItem>Custom (enter name)...</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,4,0,0" x:Name="CustomPlatformPanel" Visibility="Collapsed">
+                <TextBlock Text="Custom:" Width="80" VerticalAlignment="Center" />
+                <TextBox x:Name="CustomPlatformTextBox" Width="360" />
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,0,0,10">
@@ -45,9 +54,8 @@
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Cover:" Width="80" VerticalAlignment="Center" />
                 <Image x:Name="CoverPreview" Width="120" Height="80" Stretch="UniformToFill" Margin="0,4,0,4" />
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="Select Cover" Click="SelectCover_Click" />
-                </StackPanel>
+                <Button Content="Select Cover" Click="SelectCover_Click" Width="80" />
+                <StackPanel Orientation="Horizontal"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="20,0,0,0" VerticalAlignment="Top">

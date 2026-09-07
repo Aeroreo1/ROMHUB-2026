@@ -12,6 +12,9 @@ namespace ROMHub.Models
 
         public string Platform { get; set; } //Emulator for ROM
 
+        // Optional canonical tag for matching to emulators (e.g. "nes", "gba", "ps1")
+        public string PlatformTag { get; set; } 
+
         public string FilePath { get; set; } //File Location of ROM
 
         public string CoverImagePath { get; set; } //Path to the cover image

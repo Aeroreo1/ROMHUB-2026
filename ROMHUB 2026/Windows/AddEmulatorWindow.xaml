@@ -15,7 +15,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Title -->
@@ -45,19 +48,32 @@
 
             <ComboBox x:Name="PlatformComboBox"
                       Height="30"
-                      Margin="0,5,0,0">
+                      Margin="0,5,0,0"
+                      SelectionChanged="PlatformComboBox_SelectionChanged">
 
-                <ComboBoxItem Content="Game Boy Advance"/>
-                <ComboBoxItem Content="Nintendo DS"/>
-                <ComboBoxItem Content="Nintendo Wii"/>
+                <ComboBoxItem Content="Nintendo Entertainment System (NES) [nes; nintendo entertainment system]" Tag="nes" />
+                <ComboBoxItem Content="Game Boy Advance (GBA) [gba; gameboy advance; gameboy]" Tag="gba" />
+                <ComboBoxItem Content="DS [ds; nintendo ds]" Tag="ds" />
+                <ComboBoxItem Content="Nintendo 3DS [3ds; nintendo 3ds]" Tag="3ds" />
+                <ComboBoxItem Content="Nintendo GameCube &amp; Wii [gamecube; gc; wii]" Tag="gamecube" />
+                <ComboBoxItem Content="Nintendo WiiU [wiiu; nintendo wiiu]" Tag="wiiu" />
+                <ComboBoxItem Content="Nintendo Switch [switch; ns; nintendo switch]" Tag="switch" />
+                <ComboBoxItem Content="PlayStation 1 [ps1; playstation1; playstation]" Tag="ps1" />
+                <ComboBoxItem Content="PlayStation 2 [ps2; playstation2]" Tag="ps2" />
+                <ComboBoxItem Content="PlayStation 3 [ps3; playstation3]" Tag="ps3" />
+                <ComboBoxItem Content="PlayStation 4 [ps4; playstation4]" Tag="ps4" />
+                <ComboBoxItem Content="Xbox 360 [xbox360; x360]" Tag="xbox360" />
+                <ComboBoxItem Content="Retro Classics [retro; classic; retro classics]" Tag="retro" />
 
             </ComboBox>
 
         </StackPanel>
 
+        <!-- (Platform Tag is set via the emulator overflow menu) -->
+
 
         <!-- Emulator Path -->
-        <StackPanel Grid.Row="3" Margin="0,0,0,12">
+        <StackPanel Grid.Row="4" Margin="0,0,0,12">
 
             <TextBlock Text="Emulator Location"/>
 
@@ -78,7 +94,7 @@
 
 
         <!-- Image Path -->
-        <StackPanel Grid.Row="4" Margin="0,0,0,12">
+        <StackPanel Grid.Row="5" Margin="0,0,0,12">
 
             <TextBlock Text="Emulator Image"/>
 
@@ -91,15 +107,17 @@
                         Click="BrowseImage_Click"/>
 
                 <TextBox x:Name="ImagePathTextBox"
-                         Height="30"/>
+                         Height="30" TextChanged="ImagePathTextBox_TextChanged"/>
 
             </DockPanel>
 
         </StackPanel>
 
+        <!-- Preview removed per request -->
+
 
         <!-- Buttons -->
-        <StackPanel Grid.Row="5"
+        <StackPanel Grid.Row="8"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom">

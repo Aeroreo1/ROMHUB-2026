@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
@@ -11,6 +12,7 @@ namespace ROMHub.Converters
     // to avoid file locks; otherwise a packaged default image is returned via pack URI.
     public class ImagePathToBitmapConverter : IValueConverter
     {
+        private static bool _webpWarningShown;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
@@ -18,13 +20,27 @@ namespace ROMHub.Converters
                 var path = value as string;
                 if (!string.IsNullOrEmpty(path) && File.Exists(path))
                 {
-                    var bmp = new BitmapImage();
-                    bmp.BeginInit();
-                    bmp.UriSource = new Uri(path, UriKind.Absolute);
-                    bmp.CacheOption = BitmapCacheOption.OnLoad;
-                    bmp.EndInit();
-                    bmp.Freeze();
-                    return bmp;
+                    try
+                    {
+                        var bmp = new BitmapImage();
+                        bmp.BeginInit();
+                        bmp.UriSource = new Uri(path, UriKind.Absolute);
+                        bmp.CacheOption = BitmapCacheOption.OnLoad;
+                        bmp.EndInit();
+                        bmp.Freeze();
+                        return bmp;
+                    }
+                    catch
+                    {
+                        // If loading fails for WebP, warn once and fall back
+                        var ext = System.IO.Path.GetExtension(path).ToLowerInvariant();
+                        if (ext == ".webp" && !_webpWarningShown)
+                        {
+                            _webpWarningShown = true;
+                            MessageBox.Show("Failed to render WebP image. Your system may not have WebP imaging support installed. The app will fall back to a default image.", "Image Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        // continue to fall back to local Images or packaged default
+                    }
                 }
 
                 // Try to find any image under a local Images folder next to the executable
@@ -32,20 +48,32 @@ namespace ROMHub.Converters
                 var imagesDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
                 if (Directory.Exists(imagesDir))
                 {
-                    var supported = new[] { ".png", ".jpg", ".jpeg", ".bmp", ".gif" };
+                    var supported = new[] { ".png", ".jpg", ".jpeg", ".jfif", ".webp", ".bmp", ".gif" };
                     var files = Directory.GetFiles(imagesDir)
                         .Where(f => supported.Contains(System.IO.Path.GetExtension(f).ToLowerInvariant()))
                         .ToArray();
 
                     if (files.Length > 0)
                     {
-                        var bmpLocal = new BitmapImage();
-                        bmpLocal.BeginInit();
-                        bmpLocal.UriSource = new Uri(files[0], UriKind.Absolute);
-                        bmpLocal.CacheOption = BitmapCacheOption.OnLoad;
-                        bmpLocal.EndInit();
-                        bmpLocal.Freeze();
-                        return bmpLocal;
+                        try
+                        {
+                            var bmpLocal = new BitmapImage();
+                            bmpLocal.BeginInit();
+                            bmpLocal.UriSource = new Uri(files[0], UriKind.Absolute);
+                            bmpLocal.CacheOption = BitmapCacheOption.OnLoad;
+                            bmpLocal.EndInit();
+                            bmpLocal.Freeze();
+                            return bmpLocal;
+                        }
+                        catch
+                        {
+                            var ext = System.IO.Path.GetExtension(files[0]).ToLowerInvariant();
+                            if (ext == ".webp" && !_webpWarningShown)
+                            {
+                                _webpWarningShown = true;
+                                MessageBox.Show("Failed to render WebP image from the Images folder. Install WebP support or provide a PNG/JPG. Falling back to packaged default.", "Image Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                        }
                     }
                 }
 
