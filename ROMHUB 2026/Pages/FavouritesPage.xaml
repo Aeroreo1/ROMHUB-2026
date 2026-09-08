@@ -3,16 +3,77 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Favourites">
 
-    <Grid>
-        <StackPanel Margin="20">
-            <TextBlock Text="Favourites"
-                       FontSize="28"
-                       FontWeight="Bold"
-                       Margin="0,0,0,20"/>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <TextBlock Text="Your favourite ROMs will appear here."
-                       FontSize="18"/>
-        </StackPanel>
+        <TextBlock Grid.Row="0"
+                   Text="Favourites"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Margin="0,0,0,20" />
+
+        <!-- Favourite ROMs displayed grouped by Platform -->
+        <ListView Grid.Row="1" Name="FavsListView" Background="Transparent" BorderThickness="0">
+            <ListView.Resources>
+                <DataTemplate x:Key="FavRomItemTemplate">
+                    <Border Margin="0,4" Padding="6" BorderBrush="#EEE" BorderThickness="1" CornerRadius="4">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image Source="{Binding CoverImagePath}" Width="120" Height="80" Stretch="UniformToFill" />
+
+                            <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="14" />
+                                <TextBlock Text="{Binding Platform}" FontStyle="Italic" FontSize="12" Foreground="#666" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
+                                <Button Content="Launch" Width="72" Height="28" Margin="0,0,0,6" Click="LaunchRomWithDefaultEmulator_Click" CommandParameter="{Binding}" />
+                                <Button Content="⋮" Width="28" Height="28" VerticalAlignment="Top" Click="OverflowButton_Click" CommandParameter="{Binding}" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.Resources>
+
+            <ListView.ItemTemplate>
+                <StaticResource ResourceKey="FavRomItemTemplate" />
+            </ListView.ItemTemplate>
+
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander IsExpanded="False" Padding="10" Margin="0,0,0,10">
+                                            <Expander.Header>
+                                                <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </ListView.GroupStyle>
+
+        </ListView>
     </Grid>
 
 </Page>

@@ -7,5 +7,6 @@
     <Application.Resources>
         <conv:ImagePathToBitmapConverter x:Key="ImagePathToBitmapConverter" />
         <conv:MultiImagePathToBitmapConverter x:Key="MultiImagePathToBitmapConverter" />
+        <conv:FavouriteCopyExistsConverter x:Key="FavCopyExistsConverter" />
     </Application.Resources>
 </Application>

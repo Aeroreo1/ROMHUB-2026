@@ -10,143 +10,88 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Page Title -->
-        <TextBlock Grid.Row="0"
-                   Text="ROM Library"
-                   FontSize="28"
-                   FontWeight="Bold"
-                   Margin="0,0,0,20"/>
+        <!-- Page Title and Add Rom button -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-        <!-- Library Content -->
-        <ScrollViewer Grid.Row="1"
-                      VerticalScrollBarVisibility="Auto"
-                      HorizontalScrollBarVisibility="Disabled">
+            <TextBlock Grid.Column="0"
+                       Text="ROM Library"
+                       FontSize="28"
+                       FontWeight="Bold"/>
 
-            <!-- IMPORTANT:
-                 StackPanel forces each category to appear
-                 underneath the previous one.
-            -->
-            <StackPanel Orientation="Vertical">
+            <!-- Add Rom button placed to the right of the title -->
+            <Button Grid.Column="1"
+                    Content="Add Rom"
+                    VerticalAlignment="Center"
+                    Padding="12,6"
+                    Margin="12,0,0,0"
+                    Height="32"
+                    Width="100"
+                    Click="AddRom_Click"/>
+        </Grid>
 
-                <!-- Nintendo -->
-                <Expander Header="Nintendo"
-                          Margin="0,0,0,10"
-                          Padding="10"
-                          HorizontalAlignment="Stretch">
+        <!-- Library Content: ListView bound at runtime from code-behind -->
+        <ListView Grid.Row="1" Name="RomsListView" Background="Transparent" BorderThickness="0">
+            <ListView.Resources>
+                <DataTemplate x:Key="RomItemTemplate">
+                    <Border Margin="0,4" Padding="6" BorderBrush="#EEE" BorderThickness="1" CornerRadius="4">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                    <StackPanel Margin="10">
+                            <Image Source="{Binding CoverImagePath}" Width="120" Height="80" Stretch="UniformToFill" />
 
-                        <Button Content="Nintendo DS"
-                                Height="40"
-                                Margin="0,0,0,5"/>
+                            <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="14" />
+                                <TextBlock Text="{Binding Platform}" FontStyle="Italic" FontSize="12" Foreground="#666" />
+                            </StackPanel>
 
-                        <Button Content="Nintendo 3DS"
-                                Height="40"
-                                Margin="0,0,0,5"/>
+                            <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
+                                <ToggleButton x:Name="FavouriteToggle" IsChecked="{Binding ., Converter={StaticResource FavCopyExistsConverter}}" CommandParameter="{Binding}" Width="36" Height="28" Margin="0,0,0,6" Click="FavouriteToggle_Click">★</ToggleButton>
+                                <Button Content="Launch" Width="72" Height="28" Margin="0,0,0,6" Click="LaunchRomWithDefaultEmulator_Click" CommandParameter="{Binding}" />
+                                <Button Content="⋮" Width="28" Height="28" VerticalAlignment="Top" Click="OverflowButton_Click" CommandParameter="{Binding}" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.Resources>
 
-                        <Button Content="Game Boy"
-                                Height="40"
-                                Margin="0,0,0,5"/>
+            <ListView.ItemTemplate>
+                <StaticResource ResourceKey="RomItemTemplate" />
+            </ListView.ItemTemplate>
 
-                        <Button Content="Game Boy Advance"
-                                Height="40"
-                                Margin="0,0,0,5"/>
-
-                        <Button Content="Nintendo 64"
-                                Height="40"
-                                Margin="0,0,0,5"/>
-
-                    </StackPanel>
-
-                </Expander>
-
-
-                <!-- PlayStation -->
-                <Expander Header="PlayStation"
-                          Margin="0,0,0,10"
-                          Padding="10"
-                          HorizontalAlignment="Stretch">
-
-                    <StackPanel Margin="10">
-
-                        <Button Content="PlayStation 1"
-                                Height="40"
-                                Margin="0,0,0,5"/>
-
-                        <Button Content="PlayStation 2"
-                                Height="40"
-                                Margin="0,0,0,5"/>
-
-                        <Button Content="PlayStation 3"
-                                Height="40"
-                                Margin="0,0,0,5"/>
-
-                    </StackPanel>
-
-                </Expander>
-
-
-                <!-- Xbox -->
-                <Expander Header="Xbox"
-                          Margin="0,0,0,10"
-                          Padding="10"
-                          HorizontalAlignment="Stretch">
-
-                    <StackPanel Margin="10">
-
-                        <Button Content="Xbox"
-                                Height="40"
-                                Margin="0,0,0,5"/>
-
-                        <Button Content="Xbox 360"
-                                Height="40"
-                                Margin="0,0,0,5"/>
-
-                    </StackPanel>
-
-                </Expander>
-
-
-                <!-- Sega -->
-                <Expander Header="Sega"
-                          Margin="0,0,0,10"
-                          Padding="10"
-                          HorizontalAlignment="Stretch">
-
-                    <StackPanel Margin="10">
-
-                        <Button Content="Mega Drive"
-                                Height="40"
-                                Margin="0,0,0,5"/>
-
-                        <Button Content="Dreamcast"
-                                Height="40"
-                                Margin="0,0,0,5"/>
-
-                    </StackPanel>
-
-                </Expander>
-
-
-                <!-- PC -->
-                <Expander Header="PC"
-                          Margin="0,0,0,10"
-                          Padding="10"
-                          HorizontalAlignment="Stretch">
-
-                    <StackPanel Margin="10">
-
-                        <Button Content="Windows Games"
-                                Height="40"
-                                Margin="0,0,0,5"/>
-
-                    </StackPanel>
-
-                </Expander>
-
-            </StackPanel>
-
-        </ScrollViewer>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander IsExpanded="False" Padding="10" Margin="0,0,0,10">
+                                            <Expander.Header>
+                                                <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
 
     </Grid>
 

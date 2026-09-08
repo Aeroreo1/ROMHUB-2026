@@ -21,6 +21,9 @@ namespace ROMHub.Models
 
         public bool IsFavourite { get; set; } //If the ROM is set as favourite
 
+        // If true the ROM entry is not shown in the main Library (used for favourite copies)
+        public bool HideFromLibrary { get; set; } = false;
+
         // Optional: remember the preferred emulator Id to use when launching this ROM
         public int? PreferredEmulatorId { get; set; }
     }
