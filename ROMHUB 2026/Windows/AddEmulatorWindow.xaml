@@ -64,6 +64,7 @@
                 <ComboBoxItem Content="PlayStation 4 [ps4; playstation4]" Tag="ps4" />
                 <ComboBoxItem Content="Xbox 360 [xbox360; x360]" Tag="xbox360" />
                 <ComboBoxItem Content="Retro Classics [retro; classic; retro classics]" Tag="retro" />
+                <ComboBoxItem Content="Other [other; misc; miscellaneous]" Tag="other" />
 
             </ComboBox>
 
